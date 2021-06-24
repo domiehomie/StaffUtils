@@ -19,7 +19,11 @@ public class PostgreSQLConnect {
 
 
     private String url = "jdbc:postgresql://" + host + ":" + port  + "/" + database;
-    private Connection connection;
+    private static Connection connection;
+
+    public static Connection getConnection() {
+        return connection;
+    }
 
     public void connect() {
         try {
