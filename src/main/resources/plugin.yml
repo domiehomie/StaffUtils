@@ -1,0 +1,8 @@
+name: Staffutils
+version: ${project.version}
+main: live.mufin.staffutils.Staffutils
+api-version: 1.17
+
+
+commands:
+  staffutils:
