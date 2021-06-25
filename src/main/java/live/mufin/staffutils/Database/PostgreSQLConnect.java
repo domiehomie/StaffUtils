@@ -1,6 +1,6 @@
 package live.mufin.staffutils.Database;
 
-import live.mufin.staffutils.Staffutils;
+import live.mufin.staffutils.StaffUtils;
 import org.bukkit.Bukkit;
 
 import java.sql.Connection;
@@ -10,11 +10,11 @@ import java.util.Properties;
 
 public class PostgreSQLConnect {
 
-    private String host = "plugin-test-do-user-9025222-0.b.db.ondigitalocean.com";
+    private String host = "plugintest-do-user-9025222-0.b.db.ondigitalocean.com";
     private String port = "25060";
-    private String username = "plugin";
+    private String username = "doadmin";
     private String database = "defaultdb";
-    private String password = "ya6hqht7sz4dzvyr";
+    private String password = "trl0fiqbuubokyks";
     private boolean useSSL = false;
 
 
@@ -38,9 +38,17 @@ public class PostgreSQLConnect {
             return;
         }
         if(connection != null) {
-            Staffutils.core.sendFormattedMessage(Bukkit.getConsoleSender(), "Database connection &aSUCCESS");
+            StaffUtils.core.sendFormattedMessage(Bukkit.getConsoleSender(), "Database connection &aSUCCESS");
         } else {
-            Staffutils.core.sendFormattedMessage(Bukkit.getConsoleSender(), "Database connection &cFAILED");
+            StaffUtils.core.sendFormattedMessage(Bukkit.getConsoleSender(), "Database connection &cFAILED");
+        }
+    }
+
+    public void disconnect() {
+        try {
+            connection.close();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
         }
     }
 }

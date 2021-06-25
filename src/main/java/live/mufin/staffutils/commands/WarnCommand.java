@@ -16,11 +16,12 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
+import java.util.logging.Logger;
 
-public class NoteCommand implements CommandExecutor, MCM {
+public class WarnCommand implements CommandExecutor, MCM {
     @Override
     public String commandName() {
-        return "sunote";
+        return "suwarn";
     }
 
     @Override
@@ -30,23 +31,23 @@ public class NoteCommand implements CommandExecutor, MCM {
 
     @Override
     public String usage() {
-        return "/sunote <player> <note>";
+        return "/suwarn <player> <message>";
     }
 
     @Override
     public String description() {
-        return "Lets you add a note to a specific player.";
+        return "Warn a player when they do something wrong.";
     }
 
     @Override
     public String permission() {
-        return "staffutils.addnote";
+        return "staffutils.addwarning";
     }
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         if(args.length < 2) {
-            StaffUtils.core.sendFormattedMessage(sender, "&cYou have to supply a player and a message.");
+            StaffUtils.core.sendFormattedMessage(sender, "&cYou have to supply a player and a reason.");
             return true;
         }
         Player p = Bukkit.getPlayer(args[0]);
@@ -55,16 +56,21 @@ public class NoteCommand implements CommandExecutor, MCM {
             return true;
         }
         UUID uuid = p.getUniqueId();
-        List<String> notes = new LinkedList<>(Arrays.asList(args));
-        notes.remove(0);
-        String note = String.join(" ", notes);
+        List<String> reasoning = new LinkedList<>(Arrays.asList(args));
+        reasoning.remove(0);
+        String reason = String.join(" ", reasoning);
         try {
-            PreparedStatement ps = PostgreSQLConnect.getConnection().prepareStatement("INSERT INTO notes(uuid, note) VALUES (?, ?)");
+            PreparedStatement ps = PostgreSQLConnect.getConnection().prepareStatement("INSERT INTO warnings(uuid, reason) VALUES (?, ?)");
             ps.setString(1, uuid.toString());
-            ps.setString(2, note);
+            ps.setString(2, reason);
             ps.executeUpdate();
-            StaffUtils.core.sendFormattedMessage(sender, "Successfully added the note &d" + note + "&7 to &d" + uuid + "&7.");
-            Logging.Log("NOTE - " + sender.getName() + " added note " + note + " to " + p.getName() + ".");
+
+            StaffUtils.core.sendFormattedMessage(sender, "Warned &d" + p.getName() + "&7 for &d" + reason + "&7.");
+
+            if(StaffUtils.config.getBoolean("warnings.globally-announce")) Bukkit.broadcastMessage("&d" + p.getName() + "&7 has been warned for &d" + reason + "&7.");
+            if(StaffUtils.config.getBoolean("warnings.announce-to-player")) StaffUtils.core.sendFormattedMessage(p, "&7You have been warned for &d" + reason + "&7.");
+
+            Logging.Log("WARNING - " + sender.getName() + " warned " + p.getName() + " for " + reason + ".");
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

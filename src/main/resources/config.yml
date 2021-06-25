@@ -1,0 +1,3 @@
+warnings:
+  globally-announce: false
+  announce-to-player: true

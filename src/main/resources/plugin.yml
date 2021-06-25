@@ -1,8 +1,13 @@
-name: Staffutils
+name: StaffUtils
 version: ${project.version}
-main: live.mufin.staffutils.Staffutils
+main: live.mufin.staffutils.StaffUtils
 api-version: 1.17
 
 
 commands:
   staffutils:
+  sunote:
+  suwarn:
+  suplayer:
+  sukick:
+  addtrustscore:
