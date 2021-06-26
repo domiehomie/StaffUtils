@@ -29,7 +29,7 @@ public class Tables {
 
     public void createMutesTable() {
         try {
-            ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Mutes(ID SERIAL PRIMARY KEY,UUID CHAR(50),MUTEDAT TIMESTAMP DEFAULT CURRENT_TIMESTAMP, MUTEDBY CHAR(50), MUTEDUNTIL TIMESTAMP, MUTEDFOR CHAR(100))");
+            ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Mutes(ID SERIAL PRIMARY KEY,UUID CHAR(50),MUTEDAT TIMESTAMP DEFAULT CURRENT_TIMESTAMP, MUTEDBY CHAR(50), MUTEDUNTIL TIMESTAMP, MUTEDFOR CHAR(100), IS_ACTIVE BOOLEAN DEFAULT TRUE)");
             ps.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -38,7 +38,7 @@ public class Tables {
 
     public void createBansTable() {
         try {
-            ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Bans(ID SERIAL PRIMARY KEY, UUID CHAR(50),BANNEDAT TIMESTAMP DEFAULT CURRENT_TIMESTAMP , BANNEDBY CHAR(50), BANNEDUNTIL TIMESTAMP, BANNEDFOR CHAR(100))");
+            ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Bans(ID SERIAL PRIMARY KEY, UUID CHAR(50),BANNEDAT TIMESTAMP DEFAULT CURRENT_TIMESTAMP , BANNEDBY CHAR(50), BANNEDUNTIL TIMESTAMP, BANNEDFOR CHAR(100), PERMBAN BOOLEAN DEFAULT FALSE, IS_ACTIVE BOOLEAN DEFAULT TRUE)");
             ps.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
