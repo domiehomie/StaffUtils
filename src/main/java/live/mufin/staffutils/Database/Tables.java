@@ -29,7 +29,7 @@ public class Tables {
 
     public void createMutesTable() {
         try {
-            ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Mutes(ID SERIAL PRIMARY KEY,UUID CHAR(50),MUTEDAT CURRENT_TIME, MUTEDBY CHAR(50), MUTEDUNTIL TIMESTAMP, MUTEDFOR CHAR(100))");
+            ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Mutes(ID SERIAL PRIMARY KEY,UUID CHAR(50),MUTEDAT TIMESTAMP DEFAULT CURRENT_TIMESTAMP, MUTEDBY CHAR(50), MUTEDUNTIL TIMESTAMP, MUTEDFOR CHAR(100))");
             ps.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -38,7 +38,7 @@ public class Tables {
 
     public void createBansTable() {
         try {
-            ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Bans(ID SERIAL PRIMARY KEY, UUID CHAR(50),BANNEDAT CURRENT_TIME, BANNEDBY CHAR(50), BANNEDUNTIL TIMESTAMP, BANNEDFOR CHAR(100))");
+            ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Bans(ID SERIAL PRIMARY KEY, UUID CHAR(50),BANNEDAT TIMESTAMP DEFAULT CURRENT_TIMESTAMP , BANNEDBY CHAR(50), BANNEDUNTIL TIMESTAMP, BANNEDFOR CHAR(100))");
             ps.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -55,7 +55,16 @@ public class Tables {
     }
     public void createTicketsTable() {
         try {
-            ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Tickets(ID SERIAL PRIMARY KEY, UUID CHAR(50),TYPE CHAR(50), MESSAGE CHAR(250))");
+            ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Tickets(ID SERIAL PRIMARY KEY, UUID CHAR(50),TYPE CHAR(50), STATUS CHAR(50))");
+            ps.executeUpdate();
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+    }
+
+    public void createTicketMessagesTable() {
+        try {
+            ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS TicketMessages(ID SERIAL PRIMARY KEY, UUID CHAR(50),TICKET INT, MESSAGE CHAR(250))");
             ps.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
@@ -64,7 +73,7 @@ public class Tables {
 
     public void createPlayersTable() {
         try {
-            ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Players(ID SERIAL PRIMARY KEY,UUID CHAR(50),TRUSTSCORE INT, LASTLOGGEDIN DATE)");
+            ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Players(ID SERIAL PRIMARY KEY,UUID CHAR(50),TRUSTSCORE INT, LASTLOGGEDIN DATE, CLAIMEDSCORE INT DEFAULT 0)");
             ps.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

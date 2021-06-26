@@ -3,11 +3,29 @@ version: ${project.version}
 main: live.mufin.staffutils.StaffUtils
 api-version: 1.17
 
-
 commands:
   staffutils:
   sunote:
+    permission: staffutils.addnote
   suwarn:
+    permission: staffutils.addwarning
   suplayer:
+    permission: staffutils.getplayer
   sukick:
-  addtrustscore:
+    permission: staffutils.kick
+  createticket:
+    permission: staffutils.tickets.create
+  viewtickets:
+    permission: staffutils.tickets.viewall
+  setticketstatus:
+    permission: staffutils.tickets.setstatus
+  openticket:
+    permission: staffutils.tickets.open
+  respondinticket:
+    permission: staffutils.tickets.respond
+  sumute:
+    permission: staffutils.mute
+  removepunishment:
+    permission: staffutils.removepunishment
+  suban:
+    permission: staffutils.ban

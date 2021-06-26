@@ -3,7 +3,9 @@ package live.mufin.staffutils.commands;
 import live.mufin.MufinCore.commands.MCM;
 import live.mufin.staffutils.Database.PostgreSQLConnect;
 import live.mufin.staffutils.StaffUtils;
+import live.mufin.staffutils.utils.Mutes;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -44,58 +46,73 @@ public class PlayerCommand implements CommandExecutor, MCM {
 
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
-        List<String> warnings = new ArrayList<>();
-        List<String> notes = new ArrayList<>();
-        if(!(sender instanceof Player)) return true;
-        Player p = Bukkit.getPlayer(args[0]);
-        if(p==null) return true;
-        StaffUtils.core.sendFormattedMessage(sender, "Warnings: &d" + getWarningAmount(p.getUniqueId()));
-        StaffUtils.core.sendFormattedMessage(sender, "Notes: &d" + getNoteAmount(p.getUniqueId()));
+        OfflinePlayer p = Bukkit.getOfflinePlayer(args[0]);
+        if(p==null) {StaffUtils.core.sendFormattedMessage(sender, "&cInvalid player."); return true;}
+        if(args.length == 2) {
+            if(args[1].equalsIgnoreCase("warnings")) {
+                List<String> warnings = getWarnings(p.getUniqueId());
+                if(warnings.isEmpty()) StaffUtils.core.sendFormattedMessage(sender, "&cThat player does not have any warnings.");
+                for (int i = 0; i < warnings.size(); i++) {
+                    StaffUtils.core.sendFormattedMessage(sender, (i + 1) + " &d" + warnings.get(i));
+                }
+            }else if(args[1].equalsIgnoreCase("notes")) {
+                List<String> notes = getNotes(p.getUniqueId());
+                if(notes.isEmpty()) StaffUtils.core.sendFormattedMessage(sender, "&cThat player does not have any warnings.");
+                for (int i = 0; i < notes.size(); i++) {
+                    StaffUtils.core.sendFormattedMessage(sender, (i + 1) + " &d" + notes.get(i));
+                }
+            }
+        } else if(args.length == 1) {
+            StaffUtils.core.sendDividerMessage(sender);
+            StaffUtils.core.sendFormattedMessage(sender, "Trust score: &d" + getTrustScore(p.getUniqueId()));
+            StaffUtils.core.sendFormattedMessage(sender, "Warnings: &d" + getWarnings(p.getUniqueId()).size());
+            StaffUtils.core.sendFormattedMessage(sender, "Notes: &d" + getNotes(p.getUniqueId()).size());
+            StaffUtils.core.sendFormattedMessage(sender, "Muted: &d" + Mutes.isMuted(p.getUniqueId()));
+            StaffUtils.core.sendDividerMessage(sender);
+        }
         return true;
     }
 
-    private int getWarningAmount(UUID uuid) {
+    //TODO add all types
+    private int getTrustScore(UUID uuid) {
         try {
-            int count = 0;
-            PreparedStatement ps = PostgreSQLConnect.getConnection().prepareStatement("SELECT count(*) FROM warnings WHERE uuid=?");
+            int score = 0;
+            PreparedStatement ps = PostgreSQLConnect.getConnection().prepareStatement("SELECT trustscore FROM players WHERE UUID=?");
             ps.setString(1, uuid.toString());
             ResultSet rs = ps.executeQuery();
             rs.next();
-            count = rs.getInt(1);
-            return count;
+            return rs.getInt(1);
         } catch (SQLException ignored) { }
         return 0;
     }
-
-    private int getNoteAmount(UUID uuid) {
-        try {
-            int count = 0;
-            PreparedStatement ps = PostgreSQLConnect.getConnection().prepareStatement("SELECT count(*) FROM notes WHERE uuid=?");
-            ps.setString(1, uuid.toString());
-            ResultSet rs = ps.executeQuery();
-            rs.next();
-            count = rs.getInt(1);
-            return count;
-        } catch (SQLException ignored) { }
-        return 0;
-    }
-
 
     private List<String> getWarnings(UUID uuid) {
+        List<String> warnings = new ArrayList<>();
         try {
             PreparedStatement ps = PostgreSQLConnect.getConnection().prepareStatement("SELECT * FROM warnings WHERE uuid=?");
             ps.setString(1, uuid.toString());
             ResultSet rs = ps.executeQuery();
-            List<String> warnings = new ArrayList<>();
             while(rs.next()) {
-                System.out.println(rs.getString(3));
                 warnings.add(rs.getString(3));
             }
-            return warnings;
-
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return null;
+        return warnings;
+    }
+
+    private List<String> getNotes(UUID uuid) {
+        List<String> notes = new ArrayList<>();
+        try {
+            PreparedStatement ps = PostgreSQLConnect.getConnection().prepareStatement("SELECT * FROM notes WHERE uuid=?");
+            ps.setString(1, uuid.toString());
+            ResultSet rs = ps.executeQuery();
+            while(rs.next()) {
+                notes.add(rs.getString(3));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return notes;
     }
 }

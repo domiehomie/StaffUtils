@@ -2,8 +2,9 @@ package live.mufin.staffutils.commands;
 
 import live.mufin.MufinCore.commands.MCM;
 import live.mufin.staffutils.Database.PostgreSQLConnect;
-import live.mufin.staffutils.Logging;
+import live.mufin.staffutils.utils.Logging;
 import live.mufin.staffutils.StaffUtils;
+import live.mufin.staffutils.utils.TrustScore;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -16,7 +17,6 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
-import java.util.logging.Logger;
 
 public class WarnCommand implements CommandExecutor, MCM {
     @Override
@@ -71,6 +71,7 @@ public class WarnCommand implements CommandExecutor, MCM {
             if(StaffUtils.config.getBoolean("warnings.announce-to-player")) StaffUtils.core.sendFormattedMessage(p, "&7You have been warned for &d" + reason + "&7.");
 
             Logging.Log("WARNING - " + sender.getName() + " warned " + p.getName() + " for " + reason + ".");
+            TrustScore.addToTrustScore(uuid, -3);
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

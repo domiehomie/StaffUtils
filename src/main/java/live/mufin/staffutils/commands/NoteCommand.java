@@ -2,7 +2,7 @@ package live.mufin.staffutils.commands;
 
 import live.mufin.MufinCore.commands.MCM;
 import live.mufin.staffutils.Database.PostgreSQLConnect;
-import live.mufin.staffutils.Logging;
+import live.mufin.staffutils.utils.Logging;
 import live.mufin.staffutils.StaffUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.Command;

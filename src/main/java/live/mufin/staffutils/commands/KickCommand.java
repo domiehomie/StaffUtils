@@ -1,8 +1,9 @@
 package live.mufin.staffutils.commands;
 
 import live.mufin.MufinCore.commands.MCM;
-import live.mufin.staffutils.Logging;
+import live.mufin.staffutils.utils.Logging;
 import live.mufin.staffutils.StaffUtils;
+import live.mufin.staffutils.utils.TrustScore;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -55,6 +56,7 @@ public class KickCommand implements CommandExecutor, MCM {
                 " &d" +sender.getName() + "&f\nReason: &d" + reason));
 
         Logging.Log("KICK - " + sender.getName() + " just kicked " + p.getName() + " for " + reason + ".");
+        TrustScore.addToTrustScore(p.getUniqueId(), -7);
         return true;
     }
 }

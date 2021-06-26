@@ -1,3 +1,12 @@
 warnings:
   globally-announce: false
   announce-to-player: true
+
+
+
+tickets:
+  types:
+    - Payment
+    - Forums
+    - Question
+    - Other

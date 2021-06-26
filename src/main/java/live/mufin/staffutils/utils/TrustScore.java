@@ -1,4 +1,4 @@
-package live.mufin.staffutils;
+package live.mufin.staffutils.utils;
 
 import live.mufin.staffutils.Database.PostgreSQLConnect;
 import org.bukkit.BanList;
@@ -33,6 +33,7 @@ public class TrustScore {
             ps.setString(2, uuid.toString());
             ps.executeUpdate();
             checkTrustScore(uuid);
+            Logging.Log("TRUSTSCORE - Added " + amount + " to the trust score of " + Bukkit.getPlayer(uuid).getName());
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -42,11 +43,8 @@ public class TrustScore {
         if(getTrustScore(uuid) <= 0) {
             Player p = Bukkit.getPlayer(uuid);
             if(p == null) throw new IllegalArgumentException("Invalid player");
-            p.kickPlayer(ChatColor.translateAlternateColorCodes('&', "You have been &dbanned&f!\n\nBanned by:" +
-                    " &dConsole\n&fReason: &dTrust score too low. Apply for an unban.\n&fDuration: &dForever"));
 
-            Bukkit.getBanList(BanList.Type.NAME).addBan(uuid.toString(), ChatColor.translateAlternateColorCodes('&', "You have been &dbanned&f!\n\nBanned by:" +
-                    " &dConsole\n&fReason: &dTrust score too low. Apply for an unban.\n&fDuration: &dForever"), null, null);
+            Bans.ban(uuid, "Trust score too low.", null);
             Logging.Log("BAN - Console has banned " + p.getName() + " for a trust score below 1.");
         }
     }
