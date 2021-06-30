@@ -18,26 +18,27 @@ public class PostgreSQLConnect {
     private final boolean useSSL = StaffUtils.config.getBoolean("database.useSSL");
 
 
-    private final String url = "jdbc:postgresql://" + host + ":" + port  + "/" + database;
+    private final String url = "jdbc:postgresql://" + host + ":" + port + "/" + database;
     private static Connection connection;
 
     public static Connection getConnection() {
         return connection;
     }
 
-    public void connect() {
-        try {
-            Class.forName("org.postgresql.Driver");
-            Properties props = new Properties();
-            props.setProperty("user",username);
-            props.setProperty("password",password);
-            props.setProperty("ssl", String.valueOf(useSSL));
-            connection = DriverManager.getConnection(url, props);
-        } catch (SQLException | ClassNotFoundException throwables) {
-            throwables.printStackTrace();
-            return;
-        }
-        if(connection != null) {
+    public boolean isConnected() {
+        return connection != null;
+    }
+
+    public void connect() throws SQLException, ClassNotFoundException {
+
+        Class.forName("org.postgresql.Driver");
+        Properties props = new Properties();
+        props.setProperty("user", username);
+        props.setProperty("password", password);
+        props.setProperty("ssl", String.valueOf(useSSL));
+        connection = DriverManager.getConnection(url, props);
+
+        if (connection != null) {
             StaffUtils.core.sendFormattedMessage(Bukkit.getConsoleSender(), "Database connection &aSUCCESS");
         } else {
             StaffUtils.core.sendFormattedMessage(Bukkit.getConsoleSender(), "Database connection &cFAILED");
@@ -46,7 +47,9 @@ public class PostgreSQLConnect {
 
     public void disconnect() {
         try {
-            connection.close();
+            if(connection != null) {
+                connection.close();
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

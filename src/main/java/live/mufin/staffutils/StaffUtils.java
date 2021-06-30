@@ -13,9 +13,12 @@ import live.mufin.staffutils.database.PostgreSQLConnect;
 import live.mufin.staffutils.database.Tables;
 import live.mufin.staffutils.events.ChatEvent;
 import live.mufin.staffutils.events.JoinEvent;
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.sql.SQLException;
 
 public final class StaffUtils extends JavaPlugin {
 
@@ -81,15 +84,23 @@ public final class StaffUtils extends JavaPlugin {
     }
 
     public void registerDBAndTables() {
-        db.connect();
+        try {
+            db.connect();
+        } catch (SQLException | ClassNotFoundException throwables) {
+            core.sendFormattedMessage(Bukkit.getConsoleSender(), "Database connection &cFAILED");
+            core.sendFormattedMessage(Bukkit.getConsoleSender(), "&cUPDATE YOUR DATABASE CREDENTIALS. THE PLUGIN WILL NOT WORK WITHOUT A CONNECTION.");
+        }
+
         Tables tables = new Tables();
-        tables.createNotesTable();
-        tables.createWarningsTable();
-        tables.createTicketsTable();
-        tables.createTicketMessagesTable();
-        tables.createMutesTable();
-        tables.createPlayersTable();
-        tables.createBansTable();
-        tables.createReportsTable();
+        if(db.isConnected()) {
+            tables.createNotesTable();
+            tables.createWarningsTable();
+            tables.createTicketsTable();
+            tables.createTicketMessagesTable();
+            tables.createMutesTable();
+            tables.createPlayersTable();
+            tables.createBansTable();
+            tables.createReportsTable();
+        }
     }
 }

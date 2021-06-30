@@ -1,0 +1,15 @@
+`staffutils.addnote`
+`staffutils.addwarning`
+`staffutils.getplayer`
+`staffutils.kick`
+`staffutils.tickets.create`
+`staffutils.tickets.viewall`
+`staffutils.tickets.setstatus`
+`staffutils.tickets.open`
+`staffutils.tickets.respond`
+`staffutils.mute`
+`staffutils.removepunishment`
+`staffutils.ban`
+`staffutils.reports.open`
+`staffutils.reports.getall`
+`staffutils.reports.close`
