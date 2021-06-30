@@ -52,11 +52,12 @@ public class KickCommand implements CommandExecutor, MCM {
         reasoning.remove(0);
         String reason = String.join(" ", reasoning);
 
+
+        TrustScore.addToTrustScore(p.getUniqueId(), -7);
         p.kickPlayer(ChatColor.translateAlternateColorCodes('&', "You were kicked.\n\nKicked by:" +
                 " &d" +sender.getName() + "&f\nReason: &d" + reason));
 
         Logging.Log("KICK - " + sender.getName() + " just kicked " + p.getName() + " for " + reason + ".");
-        TrustScore.addToTrustScore(p.getUniqueId(), -7);
         return true;
     }
 }

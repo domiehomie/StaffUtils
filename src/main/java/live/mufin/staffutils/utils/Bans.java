@@ -1,12 +1,9 @@
 package live.mufin.staffutils.utils;
 
 import com.mongodb.lang.Nullable;
-import live.mufin.staffutils.Database.PostgreSQLConnect;
-import live.mufin.staffutils.StaffUtils;
-import org.bukkit.BanList;
+import live.mufin.staffutils.database.PostgreSQLConnect;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

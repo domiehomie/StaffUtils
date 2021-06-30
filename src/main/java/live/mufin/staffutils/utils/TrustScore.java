@@ -1,9 +1,7 @@
 package live.mufin.staffutils.utils;
 
-import live.mufin.staffutils.Database.PostgreSQLConnect;
-import org.bukkit.BanList;
+import live.mufin.staffutils.database.PostgreSQLConnect;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;

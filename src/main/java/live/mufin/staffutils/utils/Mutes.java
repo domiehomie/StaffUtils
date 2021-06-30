@@ -1,6 +1,6 @@
 package live.mufin.staffutils.utils;
 
-import live.mufin.staffutils.Database.PostgreSQLConnect;
+import live.mufin.staffutils.database.PostgreSQLConnect;
 import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;

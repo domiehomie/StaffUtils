@@ -1,8 +1,9 @@
-package live.mufin.staffutils.Database;
+package live.mufin.staffutils.database;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+
 
 public class Tables {
 
@@ -47,7 +48,7 @@ public class Tables {
 
     public void createReportsTable() {
         try {
-            ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Reports(ID SERIAL PRIMARY KEY,UUID CHAR(50) ,REPORT VARCHAR(250),REPORTEDBY CHAR(100), REPORTEDON CURRENT_TIMESTAMP )");
+            ps = connection.prepareStatement("CREATE TABLE IF NOT EXISTS Reports(ID SERIAL PRIMARY KEY,UUID CHAR(50) ,REPORT VARCHAR(250),REPORTEDBY CHAR(100), REPORTEDON TIMESTAMP DEFAULT CURRENT_TIMESTAMP, IS_OPEN BOOLEAN DEFAULT TRUE)");
             ps.executeUpdate();
         } catch (SQLException throwables) {
             throwables.printStackTrace();

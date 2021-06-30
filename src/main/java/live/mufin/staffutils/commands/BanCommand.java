@@ -76,7 +76,6 @@ public class BanCommand implements CommandExecutor, MCM {
         }
 
 
-        //TODO tabcomplete
         try {
             int value = Integer.parseInt(String.join("", chars));
             if(convertToSeconds(value, unit) == 0) { StaffUtils.core.sendFormattedMessage(sender, "&cEither format the time like this: <amount><m|h|d>, or put \"perm\"" +
@@ -104,8 +103,6 @@ public class BanCommand implements CommandExecutor, MCM {
             case 'm':
                 ret = TimeUnit.MINUTES.toSeconds(value);
                 break;
-            case 's':
-                return 0;
             default:
                 return 0;
         }

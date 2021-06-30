@@ -2,6 +2,11 @@ name: StaffUtils
 version: ${project.version}
 main: live.mufin.staffutils.StaffUtils
 api-version: 1.17
+author: mufinlive
+database: true
+description: The last plugin you will need to manage your server.
+prefix: SU
+website: https://mufin.live/
 
 commands:
   staffutils:
@@ -29,3 +34,9 @@ commands:
     permission: staffutils.removepunishment
   suban:
     permission: staffutils.ban
+  sureport:
+    permission: staffutils.reports.open
+  sugetreports:
+    permission: staffutils.reports.getall
+  suclosereport:
+    permission: staffutils.reports.close

@@ -1,15 +1,13 @@
 package live.mufin.staffutils.utils;
 
-import live.mufin.staffutils.Database.PostgreSQLConnect;
+import live.mufin.staffutils.database.PostgreSQLConnect;
 import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 public class Tickets {
 
@@ -122,7 +120,6 @@ public class Tickets {
         }
         return false;
     }
-
     private static boolean exists(int ticket) {
         try {
             PreparedStatement ps = PostgreSQLConnect.getConnection().prepareStatement("SELECT * FROM tickets WHERE id=?");
@@ -172,7 +169,7 @@ public class Tickets {
 
         protected Message(int ticket, String message, String playeruuid) {
             this.ticket = ticket;
-            this.message = message.replaceAll(" ", "");
+            this.message = message.replaceAll("  ", "");
             this.playeruuid = playeruuid.replaceAll(" ", "");
         }
 

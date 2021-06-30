@@ -1,15 +1,16 @@
 package live.mufin.staffutils.commands;
 
 import live.mufin.MufinCore.commands.MCM;
-import live.mufin.staffutils.Database.PostgreSQLConnect;
 import live.mufin.staffutils.StaffUtils;
+import live.mufin.staffutils.database.PostgreSQLConnect;
+import live.mufin.staffutils.utils.Bans;
 import live.mufin.staffutils.utils.Mutes;
+import live.mufin.staffutils.utils.Reports;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -67,13 +68,14 @@ public class PlayerCommand implements CommandExecutor, MCM {
             StaffUtils.core.sendFormattedMessage(sender, "Trust score: &d" + getTrustScore(p.getUniqueId()));
             StaffUtils.core.sendFormattedMessage(sender, "Warnings: &d" + getWarnings(p.getUniqueId()).size());
             StaffUtils.core.sendFormattedMessage(sender, "Notes: &d" + getNotes(p.getUniqueId()).size());
+            StaffUtils.core.sendFormattedMessage(sender, "Reports: &d" + Reports.getReportsOnPlayer(p.getUniqueId()).size());
             StaffUtils.core.sendFormattedMessage(sender, "Muted: &d" + Mutes.isMuted(p.getUniqueId()));
+            StaffUtils.core.sendFormattedMessage(sender, "Banned: &d" + Bans.isBanned(p.getUniqueId()));
             StaffUtils.core.sendDividerMessage(sender);
         }
         return true;
     }
 
-    //TODO add all types
     private int getTrustScore(UUID uuid) {
         try {
             int score = 0;

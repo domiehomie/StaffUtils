@@ -11,10 +11,6 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.time.Duration;
-import java.time.Period;
-import java.time.temporal.TemporalAmount;
-import java.time.temporal.TemporalUnit;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
@@ -49,8 +45,7 @@ public class MuteCommand implements CommandExecutor, MCM {
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String s, String[] args) {
-        if(!(commandSender instanceof Player)) return true;
-        Player sender = (Player) commandSender;
+        if(!(commandSender instanceof Player sender)) return true;
         if(args.length < 3) {
             StaffUtils.core.sendFormattedMessage(commandSender, "&cPlease supply a player, duration and reason.");
             return true;
@@ -83,7 +78,7 @@ public class MuteCommand implements CommandExecutor, MCM {
 
 
     private static long convertToSeconds(int value, char unit) {
-        long ret = value;
+        long ret;
         switch (unit)
         {
             case 'd':

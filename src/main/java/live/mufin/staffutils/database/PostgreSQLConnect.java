@@ -1,4 +1,4 @@
-package live.mufin.staffutils.Database;
+package live.mufin.staffutils.database;
 
 import live.mufin.staffutils.StaffUtils;
 import org.bukkit.Bukkit;
@@ -10,15 +10,15 @@ import java.util.Properties;
 
 public class PostgreSQLConnect {
 
-    private String host = "plugintest-do-user-9025222-0.b.db.ondigitalocean.com";
-    private String port = "25060";
-    private String username = "doadmin";
-    private String database = "defaultdb";
-    private String password = "trl0fiqbuubokyks";
-    private boolean useSSL = false;
+    private final String host = StaffUtils.config.getString("database.host");
+    private final String port = StaffUtils.config.getString("database.port");
+    private final String username = StaffUtils.config.getString("database.username");
+    private final String database = StaffUtils.config.getString("database.database");
+    private final String password = StaffUtils.config.getString("database.password");
+    private final boolean useSSL = StaffUtils.config.getBoolean("database.useSSL");
 
 
-    private String url = "jdbc:postgresql://" + host + ":" + port  + "/" + database;
+    private final String url = "jdbc:postgresql://" + host + ":" + port  + "/" + database;
     private static Connection connection;
 
     public static Connection getConnection() {

@@ -1,7 +1,7 @@
 package live.mufin.staffutils.events;
 
-import live.mufin.staffutils.Database.PostgreSQLConnect;
 import live.mufin.staffutils.StaffUtils;
+import live.mufin.staffutils.database.PostgreSQLConnect;
 import live.mufin.staffutils.utils.Bans;
 import live.mufin.staffutils.utils.TrustScore;
 import org.bukkit.Bukkit;
