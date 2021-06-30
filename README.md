@@ -50,20 +50,35 @@ When a player joins, they have 75% trust score. They can get the last 25% by pla
 ## Permissions
 
 `staffutils.addnote` - To add notes
+
 `staffutils.addwarning` - To add warnings
+
 `staffutils.getplayer` - To get the information for a player.
+
 `staffutils.kick` - To kick players.
+
 `staffutils.tickets.create` - To create tickets
+
 `staffutils.tickets.viewall` - To view all tickets
+
 `staffutils.tickets.setstatus` - To set the status of a ticket
+
 `staffutils.tickets.open` - To open a ticket
+
 `staffutils.tickets.respond` - To respond in a ticket.
+
 `staffutils.mute` - To mute players.
+
 `staffutils.removepunishment` - To remove punishments on players.
+
 `staffutils.ban` - To ban players.
+
 `staffutils.reports.open` - To open a report.
+
 `staffutils.reports.getall` - To view all reports.
+
 `staffutils.reports.close` - To close reports.
+
 `staffutils.log` - To receive logs.
 
 ## Logging
